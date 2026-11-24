@@ -4,6 +4,16 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Louanges à Dieu</title>
+<meta name="theme-color" content="#5a1a2a">
+<meta name="description" content="Recueil de cantiques Louanges à Dieu : 934 cantiques, recherche par numéro, titre ou paroles. Fonctionne sans internet.">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="icons/favicon.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Louanges">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
 <style>
 @font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:500;font-display:swap;src:url(fonts/cormorant-garamond-latin-500-normal.woff2) format('woff2')}
 @font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:600;font-display:swap;src:url(fonts/cormorant-garamond-latin-600-normal.woff2) format('woff2')}
@@ -131,6 +141,14 @@ h1{font:600 clamp(28px,3.4vw,40px)/1.1 'Cormorant Garamond',serif;margin:6px 0 4
 .top:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
 @media(max-width:900px){.top{position:fixed;right:16px;bottom:calc(18px + env(safe-area-inset-bottom,0px))}}
 @media(prefers-reduced-motion:no-preference){.top.on{animation:pop .2s ease}@keyframes pop{from{opacity:0;transform:translateY(8px)}}}
+.inst{display:flex;align-items:center;gap:12px;margin:8px;padding:12px 12px 12px 14px;border-radius:12px;background:#5a1a2a;color:#f8ecd9}
+.inst[hidden]{display:none}
+.inst img{width:40px;height:40px;border-radius:10px;flex:none}
+.inst p{margin:0;flex:1;font-size:14px;line-height:1.35}
+.inst b{display:block;font-size:15px}
+.inst .go{flex:none;min-height:44px;padding:0 16px;border-radius:22px;border:0;background:#d9ad55;color:#2a1208;font-weight:600;cursor:pointer;font-size:15px}
+.inst .x{flex:none;width:36px;height:36px;border:0;background:none;color:#f8ecd9;font-size:22px;cursor:pointer;opacity:.8}
+.inst svg{width:16px;height:16px;vertical-align:-3px}
 .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:var(--page);padding:10px 18px;border-radius:20px;font-size:14px;opacity:0;transition:opacity .25s;pointer-events:none;z-index:9}
 .toast.on{opacity:1}
 @media(max-width:900px){
@@ -150,7 +168,7 @@ h1{font:600 clamp(28px,3.4vw,40px)/1.1 'Cormorant Garamond',serif;margin:6px 0 4
 <body>
 <header><div class="bar">
  <button class="brand" id="home" aria-label="Accueil">
-  <svg viewBox="0 0 40 40" aria-hidden="true"><rect x="7" y="4" width="26" height="32" rx="3" fill="#7a2a3d" stroke="#d9ad55" stroke-width="1.5"/><rect x="31" y="6" width="3" height="28" rx="1" fill="#d9ad55"/><path d="M20 11v14M15 16h10" stroke="#d9ad55" stroke-width="2.4" stroke-linecap="round"/></svg>
+  <img src="icons/icon-192.png" alt="" style="width:36px;height:36px;border-radius:9px">
   <b>Louanges à Dieu</b>
  </button>
  <div class="scol">
@@ -166,6 +184,12 @@ h1{font:600 clamp(28px,3.4vw,40px)/1.1 'Cormorant Garamond',serif;margin:6px 0 4
 
 <div class="wrap">
  <nav aria-label="Sommaire des cantiques">
+  <div class="inst" id="inst" hidden>
+   <img src="icons/icon-192.png" alt="">
+   <p id="instTxt"><b>Installer l’application</b>Sur votre écran d’accueil, utilisable sans internet.</p>
+   <button class="go" id="instGo" hidden>Installer</button>
+   <button class="x" id="instX" aria-label="Masquer">×</button>
+  </div>
   <div class="tabs" role="tablist">
    <button id="tAll" class="on">Tous</button><button id="tFav">Favoris</button><button id="tRec">Récents</button><button id="tAbo">À propos</button>
   </div>
@@ -407,6 +431,26 @@ Promise.resolve(DATA).then(d=>{
  byN=new Map(H.map(h=>[h.n,h]));
  route();
 }).catch(()=>{$('list').innerHTML='<li class="empty">Impossible de charger les cantiques.</li>'});
+}
+
+// ——— Application installable (PWA) ———
+{
+ const inst=document.getElementById('inst'),txt=document.getElementById('instTxt'),go=document.getElementById('instGo');
+ const standalone=matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;
+ const ua=navigator.userAgent,ios=/iphone|ipad|ipod/i.test(ua)||(/macintosh/i.test(ua)&&'ontouchend' in document),android=/android/i.test(ua);
+ let dismissed=false;try{dismissed=localStorage.getItem('lad-inst-x')==='1'}catch(e){}
+ let deferred=null;
+ const share='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 15V3M8 7l4-4 4 4"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></svg>';
+ function showBanner(html,withBtn){if(standalone||dismissed)return;if(html)txt.innerHTML=html;go.hidden=!withBtn;inst.hidden=false}
+ window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferred=e;showBanner('<b>Installer l’application</b>Sur votre écran d’accueil, utilisable sans internet.',true)});
+ go.onclick=async()=>{if(!deferred)return;deferred.prompt();const r=await deferred.userChoice;deferred=null;if(r.outcome==='accepted')inst.hidden=true};
+ document.getElementById('instX').onclick=()=>{inst.hidden=true;try{localStorage.setItem('lad-inst-x','1')}catch(e){}};
+ window.addEventListener('appinstalled',()=>{inst.hidden=true;const t=document.getElementById('toast');t.textContent='Application installée sur votre écran d’accueil';t.classList.add('on');setTimeout(()=>t.classList.remove('on'),2500)});
+ if(!standalone){
+  if(ios)showBanner('<b>Installer sur iPhone</b>Touchez '+share+' <b style="display:inline">Partager</b>, puis « Sur l’écran d’accueil ».',false);
+  else if(android)setTimeout(()=>{if(!deferred)showBanner('<b>Installer l’application</b>Menu ⋮ puis « Installer l’application ».',false)},4000);
+ }
+ if('serviceWorker' in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
 }
 </script>
 </body>
