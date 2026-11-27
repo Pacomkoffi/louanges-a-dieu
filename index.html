@@ -146,9 +146,6 @@ h1{font:600 clamp(28px,3.4vw,40px)/1.1 'Cormorant Garamond',serif;margin:6px 0 4
 .mail{font-size:14.5px;color:var(--mute);line-height:1.5;padding:12px 14px;border:1px dashed var(--line);border-radius:14px}
 .mail a{color:var(--wine2);font-weight:600;display:inline-block;margin-top:2px}
 .mail button{margin-top:8px;border:1px solid var(--line);background:var(--page);color:var(--ink);border-radius:8px;padding:4px 10px;font-size:13px;cursor:pointer;min-height:32px}
-.lfoot{padding:22px 18px 28px;text-align:center;color:var(--mute);font-size:13px;border-top:1px solid var(--line)}
-.lfoot b{display:block;color:var(--wine2);font:600 17px/1.25 'Cormorant Garamond',serif;margin-bottom:4px}
-.lfoot a{color:var(--wine2)}
 .over{font:500 13px/1 Figtree,sans-serif;letter-spacing:.08em;color:var(--gold);margin-top:14px}
 .appic{width:104px;height:104px;border-radius:24px;box-shadow:0 10px 28px #5a1a2a40}
 .top{position:absolute;right:14px;bottom:14px;z-index:8;display:none;align-items:center;gap:7px;min-height:46px;padding:0 18px 0 14px;border-radius:23px;border:2px solid var(--gold);background:var(--wine);color:#f8ecd9;font-weight:600;font-size:15px;box-shadow:0 8px 24px #0000004d;cursor:pointer}
@@ -333,7 +330,6 @@ function renderList(){
  $('count').textContent=mode==='approx'?'Résultats approchants · '+plural(rows.length):plural(rows.length);
  $('jump').style.display=(mode==='all'&&tab==='all')?'flex':'none';
  $('list').innerHTML=rows.length?rows.map(r=>`<li><button data-n="${r.h.n}" class="${cur===r.h.n?'cur':''}">${rowHtml(r)}</button></li>`).join('')
-  +(mode==='all'&&tab==='all'?`<li class="lfoot"><b>Recueil de Cantiques LOUANGES À DIEU</b>${AUTEUR}<br>${LIEU}<br><a href="mailto:${MAIL}">Suggestions : ${MAIL}</a></li>`:'')
   :`<li class="empty">${tab==='fav'&&!raw?'Aucun favori pour le moment.<br>Touchez l’étoile d’un cantique pour l’ajouter.':tab==='rec'&&!raw?'Les cantiques ouverts apparaîtront ici.':'Aucun cantique ne correspond à « '+esc(raw)+' ».<br>Essayez avec moins de mots ou d’autres mots du cantique.'}</li>`;
  renderSug(raw);
  if(typeof updTop==='function')updTop();
