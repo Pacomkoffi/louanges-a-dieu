@@ -1,6 +1,6 @@
 // Louanges à Dieu — fonctionnement hors connexion.
 // Changer VERSION à chaque mise à jour pour que les téléphones reçoivent la nouvelle version.
-const VERSION = 'louanges-v3-1';
+const VERSION = 'louanges-v4-1';
 const FICHIERS = [
   './',
   './index.html',

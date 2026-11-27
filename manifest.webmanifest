@@ -1,7 +1,7 @@
 {
-  "name": "Louanges à Dieu",
-  "short_name": "Louanges",
-  "description": "Recueil de cantiques Louanges à Dieu : 934 cantiques, recherche par numéro, titre ou paroles. Par Pak le Bienheureux. Gratuit pour le peuple de Dieu.",
+  "name": "Recueil de Cantiques LOUANGES À DIEU",
+  "short_name": "Louanges à Dieu",
+  "description": "Recueil de Cantiques LOUANGES À DIEU — Centre Missionnaire du Message Évangélique de la Fin des Temps, île Boulay (Côte d’Ivoire). 934 cantiques, recherche par numéro, titre ou paroles. Gratuit pour le peuple de Dieu.",
   "lang": "fr",
   "start_url": "./",
   "scope": "./",
@@ -10,10 +10,29 @@
   "orientation": "any",
   "background_color": "#f6f2ee",
   "theme_color": "#5a1a2a",
-  "categories": ["books", "lifestyle", "music"],
+  "categories": [
+    "books",
+    "lifestyle",
+    "music"
+  ],
   "icons": [
-    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
-    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
-    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
   ]
 }
